@@ -10,8 +10,8 @@ namespace Mint
         /* DO NOT LEAVE THEM EMPTY */
 
         // Enter current version here
-        internal readonly static float Major = 1;
-        internal readonly static float Minor = 8;
+        internal readonly static float Major = 2;
+        internal readonly static float Minor = 0;
 
         /* END OF VERSION PROPERTIES */
 
@@ -24,8 +24,6 @@ namespace Mint
         {
             return float.Parse(GetCurrentVersionToString());
         }
-
-        const string _jsonAssembly = @"Mint.Newtonsoft.Json.dll";
 
         const string _mutexGuid = "{DEADMOON-0EFC7B9A-D7FC-437F-B4B3-0118C643FE19-MINT}";
         internal static Mutex MUTEX;
@@ -46,9 +44,6 @@ namespace Mint
             {
                 if (_notRunning)
                 {
-                    EmbeddedAssembly.Load(_jsonAssembly, _jsonAssembly.Replace("Mint.", string.Empty));
-                    AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
                     Options.LoadSettings();
                     Application.Run(new MainForm());
                 }
@@ -58,11 +53,6 @@ namespace Mint
                     Environment.Exit(0);
                 }
             }
-        }
-
-        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            return EmbeddedAssembly.Get(args.Name);
         }
     }
 }
